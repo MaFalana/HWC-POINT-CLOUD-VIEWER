@@ -1,0 +1,194 @@
+/* =========================
+   HWC Engineering Base Styles
+   ========================= */
+
+/* Import Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Design tokens */
+:root {
+  /* Brand */
+  --hwc-red: #EE2F27;
+  --hwc-dark-gray: #292C30;
+  --hwc-medium-gray: #6C6864;
+  --hwc-light-gray: #DDD4CC;
+
+  /* Header / panel theme */
+  --hdr-bg: rgba(26, 28, 32, 0.85);
+  --hdr-fg: #F5F7FA;
+  --hdr-border: rgba(255, 255, 255, 0.08);
+  --accent: var(--hwc-red);
+
+  /* Layout */
+  --header-h: 56px;
+  /* keep in sync with your Header */
+  --panel-w: 0px;
+  /* animated width when panel closed */
+  --panel-w-open: 480px;
+  /* default desktop panel width */
+
+  /* Z-index */
+  --z-header: 60;
+  --z-panel: 50;
+  --z-map: 10;
+}
+
+/* Global reset-ish */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
+}
+
+/* Base typography & body color (optional) */
+body {
+  color: #0F1115;
+  background: #fff;
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.5;
+}
+
+/* Links & buttons minimal defaults */
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font: inherit;
+}
+
+/* Images are responsive by default */
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== Header spacing ===== */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: var(--hdr-bg);
+  color: var(--hdr-fg);
+  border-bottom: 1px solid var(--hdr-border);
+  backdrop-filter: saturate(120%) blur(8px);
+  height: var(--header-h);
+}
+
+/* Push main content below the sticky header */
+main,
+.page-content {
+  min-height: calc(100vh - var(--header-h));
+}
+
+/* ===== Map + Panel layout =====
+   Parent container should use this grid so the map shifts left when the panel opens.
+   Toggle data-panel=\"open|closed\" on this element in React. */
+.main-shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--panel-w) 1fr;
+  grid-template-rows: calc(100vh - var(--header-h));
+  width: 100%;
+  height: calc(100vh - var(--header-h));
+  transition: grid-template-columns .22s ease;
+  margin: 0;
+  padding: 0;
+}
+
+/* When panel is open, expand the second column */
+.main-shell[data-panel="open"] {
+  --panel-w: var(--panel-w-open);
+}
+
+/* Panel region (left column) */
+.panel-region {
+  position: relative;
+  z-index: var(--z-panel);
+  width: var(--panel-w);
+  overflow: hidden;
+}
+
+/* Hide panel content when closed */
+.main-shell[data-panel="closed"] .panel-region {
+  width: 0;
+  min-width: 0;
+}
+
+/* Map region (right column) */
+.map-region {
+  position: relative;
+  z-index: var(--z-map);
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  /* prevents scrollbars on map zooms */
+}
+
+
+
+/* Ensure Leaflet map fills its cell */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== Mobile behavior =====
+   On small screens, let the panel overlay instead of split grid space. */
+@media (max-width: 767px) {
+  :root {
+    --panel-w-open: 100vw;
+  }
+
+  .main-shell {
+    grid-template-columns: 1fr;
+    /* map gets full width */
+  }
+
+  .panel-region {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    bottom: 0;
+    width: var(--panel-w);
+    /* animate in/out */
+    pointer-events: auto;
+  }
+}
+
+/* ===== Utilities ===== */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,35 @@
+---
+import Image from "astro/components/Image.astro";
+import "../styles/header.css";
+
+---
+
+<!-- /src/components/Header.astro -->
+
+<header class="app-header" role="banner" aria-label="HWC">
+  <div class="hdr-inner">
+    <a class="brand" href="/" aria-label="Home">
+      <Image
+        class="brand-logo"
+        src="/assets/HWC-Logo-Light.png"
+        alt="HWC  — HWC Engineering, Inc."
+        height="40"
+		width="160"
+      />
+      <!-- If your logo already has text, no visible label needed -->
+      <span class="sr-only">HWC</span>
+    </a>
+
+    <!-- Right side reserved (empty) -->
+    <div class="hdr-actions" aria-hidden="true"></div>
+  </div>
+</header>
+
+<script>
+  // Optional: add shadow on scroll
+  const header = document.querySelector('.app-header');
+  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 4);
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+
