@@ -1,148 +1,23 @@
-/* /src/styles/header.css */
-:root {
-  --hdr-bg: rgba(26, 28, 32, 0.85);
-  --hdr-fg: #f5f7fa;
-  --hdr-border: rgba(255, 255, 255, 0.08);
-  --maxw: 1600px;
-}
-
-.app-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--hdr-bg);
-  color: var(--hdr-fg);
-  backdrop-filter: saturate(120%) blur(10px);
-  border-bottom: 1px solid var(--hdr-border);
-  transition: box-shadow .2s ease;
-}
-
-.app-header.is-scrolled {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .18);
-}
-
+/* Simple header content - base styles in global.css */
 .hdr-inner {
-  margin: 0 auto;
-  max-width: var(--maxw);
-  height: 56px;
-  padding: 0 8px 0 0;
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: inherit;
-  min-width: 0;
+  height: 100%;
+  padding: 0 16px;
 }
 
 .brand-logo {
-  display: block;
   height: 28px;
-  /* controls bar density */
   width: auto;
-  /* keeps aspect ratio of your logo-with-text */
-  object-fit: contain;
 }
 
-.hdr-actions {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-}
-
-/* Hamburger menu styles */
-.hamburger-menu {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  margin: 0;
-  background: transparent;
-  border: none;
-  border-radius: 6px;
-  color: var(--hdr-fg);
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-.hamburger-menu:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.hamburger-menu:active {
-  transform: scale(0.95);
-}
-
-.hamburger-menu:focus-visible {
-  outline: 2px solid #EE2F27;
-  outline-offset: 2px;
-  border-radius: 6px;
-}
-
-.hamburger-menu svg {
-  width: 20px;
-  height: 20px;
-}
-
-/* Accessibility helper */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* Responsive tweaks */
-@media (min-width: 768px) {
+/* Mobile */
+@media (max-width: 768px) {
   .hdr-inner {
-    height: 60px;
-    padding: 0 12px 0 0;
-    gap: 16px;
-  }
-
-  .brand-logo {
-    height: 32px;
-  }
-
-  .hamburger-menu {
-    width: 44px;
-    height: 44px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hdr-inner {
-    height: 52px;
-    padding: 0 6px 0 0;
-    gap: 8px;
+    padding: 0 12px;
   }
 
   .brand-logo {
     height: 24px;
   }
-
-  .hamburger-menu {
-    width: 36px;
-    height: 36px;
-  }
-}
-
-/* Keyboard focus */
-.brand:focus-visible {
-  outline: 2px solid #EE2F27;
-  outline-offset: 3px;
-  border-radius: 10px;
 }
