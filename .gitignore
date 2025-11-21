@@ -1,5 +1,8 @@
 # build output
 
+# ai assistants
+.claude/
+.kiro/
 
 # generated types
 .astro/
