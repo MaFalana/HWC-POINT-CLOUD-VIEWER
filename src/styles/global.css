@@ -21,16 +21,9 @@
 
   /* Layout */
   --header-h: 56px;
-  /* keep in sync with your Header */
-  --panel-w: 0px;
-  /* animated width when panel closed */
-  --panel-w-open: 480px;
-  /* default desktop panel width */
 
   /* Z-index */
   --z-header: 60;
-  --z-panel: 50;
-  --z-map: 10;
 }
 
 /* Global reset-ish */
@@ -99,85 +92,17 @@ canvas {
   height: var(--header-h);
 }
 
-/* Push main content below the sticky header */
-main,
-.page-content {
-  min-height: calc(100vh - var(--header-h));
-}
-
-/* ===== Map + Panel layout =====
-   Parent container should use this grid so the map shifts left when the panel opens.
-   Toggle data-panel=\"open|closed\" on this element in React. */
-.main-shell {
-  position: relative;
-  display: grid;
-  grid-template-columns: var(--panel-w) 1fr;
-  grid-template-rows: calc(100vh - var(--header-h));
+/* Dashboard container */
+.hwc-dashboard {
   width: 100%;
   height: calc(100vh - var(--header-h));
-  transition: grid-template-columns .22s ease;
-  margin: 0;
-  padding: 0;
-}
-
-/* When panel is open, expand the second column */
-.main-shell[data-panel="open"] {
-  --panel-w: var(--panel-w-open);
-}
-
-/* Panel region (left column) */
-.panel-region {
-  position: relative;
-  z-index: var(--z-panel);
-  width: var(--panel-w);
   overflow: hidden;
 }
 
-/* Hide panel content when closed */
-.main-shell[data-panel="closed"] .panel-region {
-  width: 0;
-  min-width: 0;
-}
-
-/* Map region (right column) */
-.map-region {
-  position: relative;
-  z-index: var(--z-map);
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  /* prevents scrollbars on map zooms */
-}
-
-
-
-/* Ensure Leaflet map fills its cell */
+/* Ensure Leaflet map fills its container */
 .leaflet-container {
   width: 100%;
   height: 100%;
-}
-
-/* ===== Mobile behavior =====
-   On small screens, let the panel overlay instead of split grid space. */
-@media (max-width: 767px) {
-  :root {
-    --panel-w-open: 100vw;
-  }
-
-  .main-shell {
-    grid-template-columns: 1fr;
-    /* map gets full width */
-  }
-
-  .panel-region {
-    position: fixed;
-    top: var(--header-h);
-    left: 0;
-    bottom: 0;
-    width: var(--panel-w);
-    /* animate in/out */
-    pointer-events: auto;
-  }
 }
 
 /* ===== Utilities ===== */
