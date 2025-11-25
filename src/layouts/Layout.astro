@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import { StickyHeader } from "../components/StickyHeader/main";
 
 interface Props {
   title: string;
@@ -24,7 +23,7 @@ const { title } = Astro.props;
     <meta property="og:image" content="/assets/favicon.ico" />
   </head>
   <body>
-    <StickyHeader client:load />
+    {/*<StickyHeader client:only="react" />*/}
     <slot />
   </body>
 </html>

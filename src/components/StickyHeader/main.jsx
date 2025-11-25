@@ -1,6 +1,7 @@
 import '../../styles/header.css';
 
-export function StickyHeader() {
+export function StickyHeader({ children }) {
+
     return (
         <header className="app-header">
             <div className="hdr-inner">
@@ -11,6 +12,7 @@ export function StickyHeader() {
                         className="brand-logo"
                     />
                 </a>
+                { children }
             </div>
         </header>
     );

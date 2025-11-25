@@ -2,13 +2,51 @@
 .hdr-inner {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 100%;
   padding: 0 16px;
+  gap: 16px;
 }
 
 .brand-logo {
   height: 28px;
   width: auto;
+}
+
+/* Toggle buttons */
+.hdr-toggles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.hdr-toggles button {
+  background: transparent;
+  border: 1px solid var(--hdr-border);
+  color: var(--hdr-fg);
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.hdr-toggles button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent);
+}
+
+.hdr-toggles button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.hdr-toggles button svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* Mobile */
@@ -19,5 +57,18 @@
 
   .brand-logo {
     height: 24px;
+  }
+
+  .hdr-toggles {
+    gap: 6px;
+  }
+
+  .hdr-toggles button {
+    padding: 6px 10px;
+  }
+
+  .hdr-toggles button svg {
+    width: 16px;
+    height: 16px;
   }
 }
