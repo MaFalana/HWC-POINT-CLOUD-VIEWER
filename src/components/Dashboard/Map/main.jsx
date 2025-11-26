@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { divIcon } from 'leaflet';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
+import { LayerToggle, ZoomControls } from './controls';
 
 // Component to handle auto-fitting bounds on initial load
 function FitBounds({ projects }) {
@@ -24,11 +25,30 @@ function FitBounds({ projects }) {
     return null;
 }
 
+// Component to handle zoom controls with map instance
+function MapZoomControls({ projects }) {
+    const map = useMap();
+
+    const handleZoomIn = () => map.zoomIn();
+    const handleZoomOut = () => map.zoomOut();
+    const handleZoomToAll = () => {
+        if (projects && projects.length > 0) {
+            const bounds = projects.map(project => [
+                project.location.lat,
+                project.location.lon
+            ]);
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+    };
+
+    return <ZoomControls onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} onZoomToAll={handleZoomToAll} />;
+}
+
 export function HWCMap({ projects = [] }) {
     const apiKey = import.meta.env.PUBLIC_MAPTILER_API_KEY;
     const [selectedMarkerId, setSelectedMarkerId] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
-    const [baseLayer, setBaseLayer] = useState("streets");
+    const [baseLayer, setBaseLayer] = useState("satellite");
 
     // Detect mobile on mount
     useEffect(() => {
@@ -39,7 +59,7 @@ export function HWCMap({ projects = [] }) {
     const createCustomIcon = (projectId) => {
         const isSelected = selectedMarkerId === projectId;
 
-        let className = 'hwc-photo-marker';
+        let className = 'hwc-map-marker';
         if (isSelected) className += ' selected';
 
         // Use larger icon sizes on mobile for better touch targets
@@ -61,7 +81,7 @@ export function HWCMap({ projects = [] }) {
         const size = count < 10 ? 33 : count < 100 ? 40 : 47;
         return divIcon({
             html: `<div>${count}</div>`,
-            className: "hwc-photo-marker",
+            className: "hwc-marker-cluster",
             iconSize: [size, size],
             iconAnchor: [size / 2, size / 2]
         });
@@ -73,7 +93,10 @@ export function HWCMap({ projects = [] }) {
     };
 
     return (
-        <MapContainer
+        <div className="map-wrapper">
+            <LayerToggle baseLayer={baseLayer} setBaseLayer={setBaseLayer} />
+            
+            <MapContainer
             center={[0, 0]}
             zoom={2}
             minZoom={2}
@@ -87,13 +110,14 @@ export function HWCMap({ projects = [] }) {
             markerZoomAnimation={true}
             style={{ height: "100%", width: "100%" }}
         >
-            {baseLayer === "streets" ? (
+            {baseLayer === "streets" && (
                 <TileLayer
                     key="streets"
                     url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution="&copy; MapTiler &copy; OpenStreetMap contributors"
+                    attribution="&copy; OpenStreetMap contributors"
                 />
-            ) : (
+            )}
+            {baseLayer === "satellite" && (
                 <TileLayer
                     key="satellite"
                     url={`https://api.maptiler.com/maps/satellite/{z}/{x}/{y}.jpg?key=${apiKey}`}
@@ -102,6 +126,7 @@ export function HWCMap({ projects = [] }) {
             )}
 
             <FitBounds projects={projects} />
+            <MapZoomControls projects={projects} />
 
             <MarkerClusterGroup
                 iconCreateFunction={createClusterCustomIcon}
@@ -119,5 +144,6 @@ export function HWCMap({ projects = [] }) {
                 ))}
             </MarkerClusterGroup>
         </MapContainer>
+        </div>
     );
 }
