@@ -7,6 +7,7 @@ import { divIcon } from 'leaflet';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { LayerToggle, ZoomControls } from './controls';
+import { MapAttribution } from './Attribution';
 
 // Component to handle auto-fitting bounds on initial load
 function FitBounds({ projects }) {
@@ -14,11 +15,13 @@ function FitBounds({ projects }) {
 
     useEffect(() => {
         if (projects && projects.length > 0) {
-            const bounds = projects.map(project => [
-                project.location.lat,
-                project.location.lon
-            ]);
-            map.fitBounds(bounds, { padding: [50, 50] });
+            const bounds = projects
+                .filter(project => project.location?.lat && project.location?.lon)
+                .map(project => [project.location.lat, project.location.lon]);
+            
+            if (bounds.length > 0) {
+                map.fitBounds(bounds, { padding: [50, 50] });
+            }
         }
     }, []); // Empty dependency array = run once on mount
 
@@ -33,11 +36,13 @@ function MapZoomControls({ projects }) {
     const handleZoomOut = () => map.zoomOut();
     const handleZoomToAll = () => {
         if (projects && projects.length > 0) {
-            const bounds = projects.map(project => [
-                project.location.lat,
-                project.location.lon
-            ]);
-            map.fitBounds(bounds, { padding: [50, 50] });
+            const bounds = projects
+                .filter(project => project.location?.lat && project.location?.lon)
+                .map(project => [project.location.lat, project.location.lon]);
+            
+            if (bounds.length > 0) {
+                map.fitBounds(bounds, { padding: [50, 50] });
+            }
         }
     };
 
@@ -95,6 +100,7 @@ export function HWCMap({ projects = [] }) {
     return (
         <div className="map-wrapper">
             <LayerToggle baseLayer={baseLayer} setBaseLayer={setBaseLayer} />
+            <MapAttribution />
             
             <MapContainer
             center={[0, 0]}
@@ -132,16 +138,18 @@ export function HWCMap({ projects = [] }) {
                 iconCreateFunction={createClusterCustomIcon}
                 showCoverageOnHover={false}
             >
-                {projects.map((project) => (
-                    <Marker
-                        key={project.id}
-                        position={project.location}
-                        icon={createCustomIcon(project.id)}
-                        eventHandlers={{
-                            click: () => handleMarkerClick(project.id)
-                        }}
-                    />
-                ))}
+                {projects
+                    .filter(project => project.location?.lat && project.location?.lon)
+                    .map((project) => (
+                        <Marker
+                            key={project._id}
+                            position={[project.location.lat, project.location.lon]}
+                            icon={createCustomIcon(project._id)}
+                            eventHandlers={{
+                                click: () => handleMarkerClick(project._id)
+                            }}
+                        />
+                    ))}
             </MarkerClusterGroup>
         </MapContainer>
         </div>

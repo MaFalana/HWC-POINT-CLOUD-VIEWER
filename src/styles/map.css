@@ -211,18 +211,7 @@
 ============================ 
 */
 
-.cluster-icon {
-  background-color: #333;
-  height: 2em;
-  width: 2em;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 0 0px 5px #fff;
-}
+
 
 .hwc-marker-cluster {
   background-color: var(--hwc-red);
@@ -244,7 +233,7 @@
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
-.hwc-marker-cluster .cluster-icon {
+.hwc-marker-cluster div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -253,19 +242,36 @@
   text-align: center;
   line-height: 1;
   font-size: 12px;
-  background-color: transparent;
-  box-shadow: none;
+}
+
+/* Map Attribution */
+.hwc-map-attribution {
+  position: absolute;
+  z-index: 1000;
+  bottom: 0;
+  left: 50%;
+  display: block;
+  padding: 4px 8px;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(4px);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: var(--hwc-medium-gray);
+  font-size: 10px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 /* Responsive cluster sizes */
-.leaflet-div-icon.hwc-marker-cluster[style*="width: 33px"] .cluster-icon {
+.leaflet-div-icon.hwc-marker-cluster[style*="width: 33px"] div {
   font-size: 11px;
 }
 
-.leaflet-div-icon.hwc-marker-cluster[style*="width: 40px"] .cluster-icon {
+.leaflet-div-icon.hwc-marker-cluster[style*="width: 40px"] div {
   font-size: 12px;
 }
 
-.leaflet-div-icon.hwc-marker-cluster[style*="width: 47px"] .cluster-icon {
+.leaflet-div-icon.hwc-marker-cluster[style*="width: 47px"] div {
   font-size: 13px;
 }

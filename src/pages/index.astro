@@ -1,14 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const ProjectName = "Cloud Viewer";
 import { Dashboard } from '../components/Dashboard/main';
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 
-// const response = await fetch(import.meta.env.PUBLIC_API_BASE_URL);
-// const projects = await response.json();
+const ProjectName = "Cloud Viewer";
+
+// comment 
+
+const apiUrl = `${import.meta.env.PUBLIC_API_BASE_URL}/projects?sort_order=asc&limit=33`;
+console.log('Fetching from:', apiUrl);
+
+// Coomient
+
+const response = await fetch(apiUrl, {
+  headers: { 'Cache-Control': 'no-cache' }
+});
+console.log('Response status:', response.status);
+
+const data = await response.json();
+
+const projects = data.Projects || [];
+console.log('Projects count:', projects.length);
 ---
 
 <Layout title={`HWC Engineering | ${ProjectName}`}>
-	<Dashboard client:only="react" projects={[]} />
+	<Dashboard client:only="react" projects={projects} />
 </Layout>
