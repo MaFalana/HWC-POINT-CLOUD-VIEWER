@@ -8,6 +8,7 @@ import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { LayerToggle, ZoomControls } from './controls';
 import { MapAttribution } from './Attribution';
+import { MapList } from './MapList';
 
 // Component to handle auto-fitting bounds on initial load
 function FitBounds({ projects }) {
@@ -49,9 +50,28 @@ function MapZoomControls({ projects }) {
     return <ZoomControls onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} onZoomToAll={handleZoomToAll} />;
 }
 
+// Component to handle navigation to specific project
+function MapNavigator({ targetProject }) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (targetProject && targetProject.location) {
+            map.panTo([targetProject.location.lat, targetProject.location.lon], {
+                animate: true,
+                duration: 1
+            });
+        }
+    }, [targetProject, map]);
+
+    return null;
+}
+
 export function HWCMap({ projects = [] }) {
     const apiKey = import.meta.env.PUBLIC_MAPTILER_API_KEY;
     const [selectedMarkerId, setSelectedMarkerId] = useState(null);
+    const [highlightedId, setHighlightedId] = useState(null);
+    const [selectedIds, setSelectedIds] = useState(new Set());
+    const [targetProject, setTargetProject] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
     const [baseLayer, setBaseLayer] = useState("satellite");
 
@@ -94,11 +114,37 @@ export function HWCMap({ projects = [] }) {
 
     const handleMarkerClick = (projectId) => {
         setSelectedMarkerId(projectId);
-        // Add additional logic here (e.g., show project details)
+    };
+
+    const handleSelect = (id) => {
+        const newSelected = new Set(selectedIds);
+        if (newSelected.has(id)) {
+            newSelected.delete(id);
+        } else {
+            newSelected.add(id);
+        }
+        setSelectedIds(newSelected);
+    };
+
+    const handleNavigate = (project) => {
+        setSelectedMarkerId(project._id);
+        setTargetProject(project);
+    };
+
+    const handleHover = (id) => {
+        setHighlightedId(id);
     };
 
     return (
         <div className="map-wrapper">
+            <MapList 
+                projects={projects.filter(p => p.location?.lat && p.location?.lon)}
+                selectedIds={selectedIds}
+                onSelect={handleSelect}
+                onNavigate={handleNavigate}
+                highlightedId={highlightedId}
+                onHover={handleHover}
+            />
             <LayerToggle baseLayer={baseLayer} setBaseLayer={setBaseLayer} />
             <MapAttribution />
             
@@ -133,6 +179,7 @@ export function HWCMap({ projects = [] }) {
 
             <FitBounds projects={projects} />
             <MapZoomControls projects={projects} />
+            <MapNavigator targetProject={targetProject} />
 
             <MarkerClusterGroup
                 iconCreateFunction={createClusterCustomIcon}

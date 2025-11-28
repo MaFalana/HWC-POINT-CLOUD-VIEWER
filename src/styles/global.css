@@ -41,10 +41,11 @@ html,
 body {
   margin: 0;
   padding: 0;
-  min-height: 100%;
+  height: 100%;
   width: 100%;
-  overflow-x: hidden;
-  /* Prevent horizontal scrolling */
+  overflow: hidden;
+  border: none;
+  outline: none;
 }
 
 /* Base typography & body color (optional) */
@@ -90,6 +91,7 @@ canvas {
   border-bottom: 1px solid var(--hdr-border);
   backdrop-filter: saturate(120%) blur(8px);
   height: var(--header-h);
+  box-sizing: border-box;
 }
 
 /* Dashboard container */
@@ -97,6 +99,30 @@ canvas {
   width: 100%;
   height: calc(100vh - var(--header-h));
   overflow: hidden;
+  border: none;
+  outline: none;
+}
+
+/* Mobile map message */
+.mobile-map-message {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hwc-dashboard .map-wrapper {
+    display: none;
+  }
+  
+  .mobile-map-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 2rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    background: #1a1c20;
+  }
 }
 
 /* Ensure Leaflet map fills its container */

@@ -13,12 +13,141 @@
   width: auto;
 }
 
+/* Header Controls Layout */
+.header-controls {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+/* Search Bar */
+.header-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  width: 16px;
+  height: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+.search-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--hdr-border);
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+  color: var(--hdr-fg);
+  font-size: 0.875rem;
+  width: 200px;
+  transition: all 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.search-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent);
+  width: 250px;
+}
+
+/* Sort Dropdown */
+.header-sort {
+  position: relative;
+  z-index: 1100;
+}
+
+.sort-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--hdr-border);
+  color: var(--hdr-fg);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.sort-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent);
+}
+
+.sort-button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.sort-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1099;
+}
+
+.sort-dropdown {
+  background: var(--hdr-bg);
+  border: 1px solid var(--hdr-border);
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  backdrop-filter: saturate(120%) blur(8px);
+  width: 180px;
+  z-index: 1100;
+  overflow: hidden;
+}
+
+.sort-option {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--hdr-fg);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid var(--hdr-border);
+}
+
+.sort-option:last-child {
+  border-bottom: none;
+}
+
+.sort-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sort-option.active {
+  background: var(--accent);
+  color: white;
+}
+
 /* Toggle buttons */
 .hdr-toggles {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto;
 }
 
 .hdr-toggles button {
