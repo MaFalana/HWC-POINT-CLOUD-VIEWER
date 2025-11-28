@@ -4,7 +4,7 @@ import '../../../styles/list.css';
 import '../../../styles/project-menu.css';
 import { ProjectMenu } from '../ProjectMenu';
 
-function TableRow({ project, isSelected, onSelect }) {
+function TableRow({ project, isSelected, onSelect, onEditProject }) {
   const formattedDate = new Date(project.date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -40,6 +40,8 @@ function TableRow({ project, isSelected, onSelect }) {
         <ProjectMenu
           projectId={project._id}
           projectName={project.name}
+          project={project}
+          onEdit={onEditProject}
           triggerButton={{
             className: "table-menu-btn",
             ariaLabel: "More options",
@@ -51,7 +53,7 @@ function TableRow({ project, isSelected, onSelect }) {
   );
 }
 
-export function ListView({ projects }) {
+export function ListView({ projects, onEditProject }) {
   const [selectedIds, setSelectedIds] = useState(new Set());
 
   const handleSelectAll = (e) => {
@@ -103,6 +105,7 @@ export function ListView({ projects }) {
                 project={project}
                 isSelected={selectedIds.has(project._id)}
                 onSelect={handleSelect}
+                onEditProject={onEditProject}
               />
             ))}
           </tbody>

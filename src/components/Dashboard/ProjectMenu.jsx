@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-export function ProjectMenu({ projectId, projectName, triggerButton }) {
+export function ProjectMenu({ projectId, projectName, project, triggerButton, onEdit }) {
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef(null);
@@ -21,8 +21,11 @@ export function ProjectMenu({ projectId, projectName, triggerButton }) {
   }, [isOpen]);
 
   const handleEdit = () => {
-    console.log('Edit project:', projectId);
-    // TODO: Implement edit functionality
+    if (onEdit && project) {
+      onEdit(project);
+    } else {
+      console.log('Edit project:', projectId);
+    }
     setIsOpen(false);
   };
 

@@ -3,7 +3,7 @@ import '../../../styles/project-menu.css';
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { ProjectMenu } from '../ProjectMenu';
 
-export function HWCCard({ project }) {
+export function HWCCard({ project, onEditProject }) {
     const formattedDate = new Date(project.date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
@@ -42,6 +42,8 @@ export function HWCCard({ project }) {
                     <ProjectMenu
                         projectId={project._id}
                         projectName={project.name}
+                        project={project}
+                        onEdit={onEditProject}
                         triggerButton={{
                             className: "card-menu-btn",
                             ariaLabel: "More options",

@@ -66,7 +66,7 @@ function MapNavigator({ targetProject }) {
     return null;
 }
 
-export function HWCMap({ projects = [] }) {
+export function HWCMap({ projects = [], onEditProject }) {
     const apiKey = import.meta.env.PUBLIC_MAPTILER_API_KEY;
     const [selectedMarkerId, setSelectedMarkerId] = useState(null);
     const [highlightedId, setHighlightedId] = useState(null);
@@ -144,6 +144,7 @@ export function HWCMap({ projects = [] }) {
                 onNavigate={handleNavigate}
                 highlightedId={highlightedId}
                 onHover={handleHover}
+                onEditProject={onEditProject}
             />
             <LayerToggle baseLayer={baseLayer} setBaseLayer={setBaseLayer} />
             <MapAttribution />

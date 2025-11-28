@@ -5,7 +5,7 @@ import '../../../styles/map-list.css';
 import '../../../styles/project-menu.css';
 import { ProjectMenu } from '../ProjectMenu';
 
-function MapListItem({ project, isSelected, isHighlighted, onSelect, onNavigate, onHover }) {
+function MapListItem({ project, isSelected, isHighlighted, onSelect, onNavigate, onHover, onEditProject }) {
   const formattedDate = new Date(project.date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -42,6 +42,8 @@ function MapListItem({ project, isSelected, isHighlighted, onSelect, onNavigate,
       <ProjectMenu
         projectId={project._id}
         projectName={project.name}
+        project={project}
+        onEdit={onEditProject}
         triggerButton={{
           className: "map-list-menu-btn",
           ariaLabel: "More options",
@@ -52,7 +54,7 @@ function MapListItem({ project, isSelected, isHighlighted, onSelect, onNavigate,
   );
 }
 
-export function MapList({ projects, selectedIds, onSelect, onNavigate, highlightedId, onHover }) {
+export function MapList({ projects, selectedIds, onSelect, onNavigate, highlightedId, onHover, onEditProject }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
@@ -78,6 +80,7 @@ export function MapList({ projects, selectedIds, onSelect, onNavigate, highlight
               onSelect={onSelect}
               onNavigate={onNavigate}
               onHover={onHover}
+              onEditProject={onEditProject}
             />
           ))}
         </div>

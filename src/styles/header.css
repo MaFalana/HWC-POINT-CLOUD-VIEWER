@@ -28,6 +28,32 @@
   margin-left: auto;
 }
 
+/* Create Project Button */
+.create-project-btn {
+  background: var(--accent);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.create-project-btn:hover {
+  background: #d42820;
+}
+
+.create-project-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
 /* Search Bar */
 .header-search {
   position: relative;
