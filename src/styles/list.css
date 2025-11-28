@@ -36,9 +36,13 @@
   border-bottom: 1px solid var(--hdr-border);
 }
 
-.table-header-checkbox,
-.table-header-actions {
+.table-header-checkbox {
   width: 50px;
+  text-align: center;
+}
+
+.table-header-actions {
+  width: 60px;
   text-align: center;
 }
 
@@ -133,14 +137,15 @@
 
 /* Actions Column */
 .table-cell-actions {
-  width: 50px;
+  width: 60px;
   text-align: center;
+  padding: 0.5rem !important;
 }
 
 .table-menu-btn {
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 0.25rem;
@@ -148,16 +153,18 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  min-width: 32px;
+  min-height: 32px;
 }
 
 .table-menu-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   color: var(--hdr-fg);
 }
 
 .table-menu-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
 /* Empty State */

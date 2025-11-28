@@ -1,5 +1,7 @@
 import '../../../styles/card.css';
+import '../../../styles/project-menu.css';
 import { FaEllipsisVertical } from "react-icons/fa6";
+import { ProjectMenu } from '../ProjectMenu';
 
 export function HWCCard({ project }) {
     const formattedDate = new Date(project.date).toLocaleDateString('en-US', {
@@ -37,9 +39,15 @@ export function HWCCard({ project }) {
             <div className="card-content">
                 <div className="card-header">
                     <h3 className="card-title">{project.name}</h3>
-                    <button className="card-menu-btn" aria-label="More options">
-                        <FaEllipsisVertical />
-                    </button>
+                    <ProjectMenu
+                        projectId={project._id}
+                        projectName={project.name}
+                        triggerButton={{
+                            className: "card-menu-btn",
+                            ariaLabel: "More options",
+                            icon: <FaEllipsisVertical />
+                        }}
+                    />
                 </div>
                 
                 <p className="card-id">{project._id}</p>

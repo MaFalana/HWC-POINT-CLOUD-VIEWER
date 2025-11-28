@@ -1,6 +1,8 @@
 import { FaEllipsis } from "react-icons/fa6";
 import { useState } from "react";
 import '../../../styles/list.css';
+import '../../../styles/project-menu.css';
+import { ProjectMenu } from '../ProjectMenu';
 
 function TableRow({ project, isSelected, onSelect }) {
   const formattedDate = new Date(project.date).toLocaleDateString('en-US', {
@@ -35,9 +37,15 @@ function TableRow({ project, isSelected, onSelect }) {
       </td>
       <td className="table-cell-date">{formattedDate}</td>
       <td className="table-cell-actions">
-        <button className="table-menu-btn" aria-label="More options">
-          <FaEllipsis />
-        </button>
+        <ProjectMenu
+          projectId={project._id}
+          projectName={project.name}
+          triggerButton={{
+            className: "table-menu-btn",
+            ariaLabel: "More options",
+            icon: <FaEllipsis />
+          }}
+        />
       </td>
     </tr>
   );

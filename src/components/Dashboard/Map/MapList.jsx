@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { FaEllipsisVertical, FaChevronDown, FaChevronUp } from 'react-icons/fa6';
 import { GoArrowUpRight } from 'react-icons/go';
 import '../../../styles/map-list.css';
+import '../../../styles/project-menu.css';
+import { ProjectMenu } from '../ProjectMenu';
 
 function MapListItem({ project, isSelected, isHighlighted, onSelect, onNavigate, onHover }) {
   const formattedDate = new Date(project.date).toLocaleDateString('en-US', {
@@ -37,12 +39,15 @@ function MapListItem({ project, isSelected, isHighlighted, onSelect, onNavigate,
         <GoArrowUpRight />
       </button>
       
-      <button 
-        className="map-list-menu-btn" 
-        aria-label="More options"
-      >
-        <FaEllipsisVertical />
-      </button>
+      <ProjectMenu
+        projectId={project._id}
+        projectName={project.name}
+        triggerButton={{
+          className: "map-list-menu-btn",
+          ariaLabel: "More options",
+          icon: <FaEllipsisVertical />
+        }}
+      />
     </div>
   );
 }
