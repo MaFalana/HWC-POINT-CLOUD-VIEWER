@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { FaTimes, FaPlus, FaTrash } from 'react-icons/fa';
-import crsOptions from '../../data/Indiana.json';
+import crsOptions from '../../data/epsg/Indiana.json';
 import '../../styles/project-modal.css';
 
 export function ProjectModal({ isOpen, onClose, project = null, onSave }) {
