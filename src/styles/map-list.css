@@ -129,6 +129,13 @@
   gap: 0.25rem;
 }
 
+.map-list-header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
 .map-list-name {
   font-size: 0.875rem;
   font-weight: 500;
@@ -136,6 +143,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.map-list-status {
+  flex-shrink: 0;
 }
 
 .map-list-date {
@@ -171,10 +184,69 @@
   height: 16px;
 }
 
+/* Bulk Actions */
+.map-bulk-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(238, 47, 39, 0.15);
+  border-bottom: 1px solid rgba(238, 47, 39, 0.3);
+  flex-shrink: 0;
+}
+
+.map-bulk-count {
+  font-size: 0.875rem;
+  color: var(--hdr-fg);
+  font-weight: 500;
+  flex: 1;
+}
+
+.map-bulk-btn {
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid transparent;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.map-bulk-delete {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.map-bulk-delete:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.map-bulk-select-all {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--hdr-fg);
+  border-color: var(--hdr-border);
+}
+
+.map-bulk-select-all:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .map-list-panel {
     width: calc(100vw - 2rem);
     max-height: 40vh;
+  }
+  
+  .map-bulk-actions {
+    flex-wrap: wrap;
+  }
+  
+  .map-bulk-count {
+    flex-basis: 100%;
   }
 }

@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 
 import { useState, useEffect } from 'react';
 import { divIcon } from 'leaflet';
-import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Tooltip, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { LayerToggle, ZoomControls } from './controls';
 import { MapAttribution } from './Attribution';
@@ -66,9 +66,8 @@ function MapNavigator({ targetProject }) {
     return null;
 }
 
-export function HWCMap({ projects = [], onEditProject }) {
+export function HWCMap({ projects = [], onEditProject, onDeleteProject }) {
     const apiKey = import.meta.env.PUBLIC_MAPTILER_API_KEY;
-    const [selectedMarkerId, setSelectedMarkerId] = useState(null);
     const [highlightedId, setHighlightedId] = useState(null);
     const [selectedIds, setSelectedIds] = useState(new Set());
     const [targetProject, setTargetProject] = useState(null);
@@ -80,22 +79,14 @@ export function HWCMap({ projects = [], onEditProject }) {
         setIsMobile(window.innerWidth < 768);
     }, []);
 
-    // Create custom icon function that accepts active and selected states
-    const createCustomIcon = (projectId) => {
-        const isSelected = selectedMarkerId === projectId;
-
-        let className = 'hwc-map-marker';
-        if (isSelected) className += ' selected';
-
+    // Create custom icon function
+    const createCustomIcon = () => {
         // Use larger icon sizes on mobile for better touch targets
-        const baseSize = isMobile ? 32 : 24;
-        const selectedSize = isMobile ? 36 : 28;
-
-        const size = isSelected ? selectedSize : baseSize;
+        const size = isMobile ? 32 : 24;
 
         return divIcon({
             html: `<div>•</div>`,
-            className: className,
+            className: 'hwc-map-marker',
             iconSize: [size, size]
         });
     };
@@ -112,10 +103,6 @@ export function HWCMap({ projects = [], onEditProject }) {
         });
     };
 
-    const handleMarkerClick = (projectId) => {
-        setSelectedMarkerId(projectId);
-    };
-
     const handleSelect = (id) => {
         const newSelected = new Set(selectedIds);
         if (newSelected.has(id)) {
@@ -127,7 +114,6 @@ export function HWCMap({ projects = [], onEditProject }) {
     };
 
     const handleNavigate = (project) => {
-        setSelectedMarkerId(project._id);
         setTargetProject(project);
     };
 
@@ -145,6 +131,7 @@ export function HWCMap({ projects = [], onEditProject }) {
                 highlightedId={highlightedId}
                 onHover={handleHover}
                 onEditProject={onEditProject}
+                onDeleteProject={onDeleteProject}
             />
             <LayerToggle baseLayer={baseLayer} setBaseLayer={setBaseLayer} />
             <MapAttribution />
@@ -192,11 +179,12 @@ export function HWCMap({ projects = [], onEditProject }) {
                         <Marker
                             key={project._id}
                             position={[project.location.lat, project.location.lon]}
-                            icon={createCustomIcon(project._id)}
-                            eventHandlers={{
-                                click: () => handleMarkerClick(project._id)
-                            }}
-                        />
+                            icon={createCustomIcon()}
+                        >
+                            <Tooltip direction="top" offset={[0, -10]} opacity={0.9}>
+                                {project.name || project._id}
+                            </Tooltip>
+                        </Marker>
                     ))}
             </MarkerClusterGroup>
         </MapContainer>

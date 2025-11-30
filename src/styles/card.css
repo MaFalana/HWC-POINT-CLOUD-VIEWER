@@ -27,6 +27,30 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* Checkbox Overlay */
+.card-checkbox-overlay {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: 0.25rem;
+  padding: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-checkbox-overlay input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--hwc-red);
+  margin: 0;
 }
 
 .hwc-card:hover {
@@ -41,12 +65,21 @@
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #e8e8e8;
+  position: relative;
 }
 
 .card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Processing Indicator Overlay */
+.card-processing-overlay {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 10;
 }
 
 /* Card Content */

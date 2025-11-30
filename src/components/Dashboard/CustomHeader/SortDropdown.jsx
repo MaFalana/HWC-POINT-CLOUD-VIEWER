@@ -10,8 +10,8 @@ export function SortDropdown({ onSort, currentSort }) {
   const sortOptions = [
     { label: 'Name (A-Z)', value: 'name', order: 'asc' },
     { label: 'Name (Z-A)', value: 'name', order: 'desc' },
-    { label: 'Date (Newest)', value: 'created_at', order: 'desc' },
-    { label: 'Date (Oldest)', value: 'created_at', order: 'asc' },
+    { label: 'Date (Newest)', value: 'date', order: 'desc' },
+    { label: 'Date (Oldest)', value: 'date', order: 'asc' },
   ];
 
   useEffect(() => {

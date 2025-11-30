@@ -5,16 +5,16 @@ import React from 'react';
 import { SearchBar } from './SearchBar';
 import { SortDropdown } from './SortDropdown';
 
-export function CustomHeader({ view, setView, onSearch, onSort, currentSort, onCreateProject }) {
+export function CustomHeader({ view, setView, onSearch, onSort, currentSort, onFilter, filters, onCreateProject }) {
   return (
     <div className="header-controls">
       <div className="header-left">
-        <button className="create-project-btn" onClick={onCreateProject}>
+        <button className="create-project-btn" onClick={onCreateProject} aria-label="Create new project">
           <FaPlus />
           <span>New Project</span>
         </button>
         <SortDropdown onSort={onSort} currentSort={currentSort} />
-        <SearchBar onSearch={onSearch} />
+        <SearchBar onSearch={onSearch} onFilter={onFilter} filters={filters} />
       </div>
       
       <div className="hdr-toggles">

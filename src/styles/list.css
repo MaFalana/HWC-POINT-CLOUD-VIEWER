@@ -7,6 +7,99 @@
   background: #1a1c20;
 }
 
+/* Bulk Actions Bar */
+.bulk-actions-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(238, 47, 39, 0.15);
+  backdrop-filter: saturate(120%) blur(8px);
+  border: 1px solid rgba(238, 47, 39, 0.3);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.bulk-selection-count {
+  color: var(--hdr-fg);
+  font-weight: 500;
+  font-size: 0.875rem;
+  flex: 1;
+}
+
+.bulk-delete-btn,
+.bulk-clear-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.bulk-delete-btn {
+  background: var(--hwc-red);
+  color: white;
+}
+
+.bulk-delete-btn:hover:not(:disabled) {
+  background: #d42820;
+}
+
+.bulk-delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bulk-clear-btn {
+  background: transparent;
+  color: var(--hdr-fg);
+  border: 1px solid var(--hdr-border);
+}
+
+.bulk-clear-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Delete Progress Bar */
+.delete-progress-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: 1rem;
+  background: rgba(26, 28, 32, 0.95);
+  backdrop-filter: saturate(120%) blur(8px);
+  border: 1px solid var(--hdr-border);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.delete-progress-info {
+  color: var(--hdr-fg);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--hwc-red);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
 /* Table */
 .list-table {
   width: 100%;
@@ -23,7 +116,7 @@
   background: rgba(0, 0, 0, 0.4);
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 5;
   backdrop-filter: saturate(120%) blur(8px);
 }
 
@@ -135,6 +228,12 @@
   white-space: nowrap;
 }
 
+/* Status Column */
+.table-cell-status {
+  min-width: 150px;
+  white-space: nowrap;
+}
+
 /* Actions Column */
 .table-cell-actions {
   width: 60px;
@@ -196,14 +295,29 @@
 }
 
 @media (max-width: 768px) {
-  /* Hide less important columns on mobile */
+  /* Hide less important columns on mobile - keep checkbox, name, date, and actions */
   .table-cell-id,
   .table-header:nth-child(2) {
+    display: none;
+  }
+
+  .table-cell-client,
+  .table-header:nth-child(4) {
     display: none;
   }
 
   .table-cell-tags,
   .table-header:nth-child(5) {
     display: none;
+  }
+  
+  .table-cell-status,
+  .table-header:nth-child(7) {
+    display: none;
+  }
+
+  /* Make name column take more space */
+  .table-cell-name {
+    max-width: none;
   }
 }

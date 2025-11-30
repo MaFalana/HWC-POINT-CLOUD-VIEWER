@@ -1,17 +1,88 @@
+import { useState, useEffect } from 'react';
 import '../../../styles/card.css';
 import '../../../styles/project-menu.css';
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { ProjectMenu } from '../ProjectMenu';
+import { ProcessingIndicator } from '../ProcessingIndicator';
+import { jobAPI } from '../../../api/index.js';
 
-export function HWCCard({ project, onEditProject }) {
+export function HWCCard({ project, isSelected, onSelect, onEditProject, onDeleteProject }) {
+    const [activeJob, setActiveJob] = useState(null);
+    const [isHovered, setIsHovered] = useState(false);
+    
     const formattedDate = new Date(project.date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
     });
 
+    // Fetch active jobs for this project
+    useEffect(() => {
+        let isMounted = true;
+        let pollingInterval = null;
+
+        const fetchActiveJob = async () => {
+            try {
+                const jobs = await jobAPI.getByProject(project._id);
+                const active = jobs.find(job => 
+                    job.status === 'pending' || 
+                    job.status === 'processing' || 
+                    job.status === 'failed'
+                );
+                
+                if (isMounted) {
+                    setActiveJob(active || null);
+                    
+                    // Start polling if there's an active job
+                    if (active && (active.status === 'pending' || active.status === 'processing')) {
+                        if (!pollingInterval) {
+                            pollingInterval = setInterval(fetchActiveJob, 2000);
+                        }
+                    } else {
+                        // Stop polling if no active job
+                        if (pollingInterval) {
+                            clearInterval(pollingInterval);
+                            pollingInterval = null;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch jobs for project:', project._id, error);
+            }
+        };
+
+        fetchActiveJob();
+
+        return () => {
+            isMounted = false;
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+            }
+        };
+    }, [project._id]);
+
     return (
-        <div className="hwc-card">
+        <div 
+            className="hwc-card"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            {/* Checkbox overlay - appears on hover */}
+            {(isHovered || isSelected) && (
+                <div className="card-checkbox-overlay">
+                    <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={(e) => {
+                            e.stopPropagation();
+                            onSelect(project._id);
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                        aria-label={`Select ${project.name}`}
+                    />
+                </div>
+            )}
+            
             <div className="card-image">
                 {project.thumbnail ? (
                     <img 
@@ -34,6 +105,13 @@ export function HWCCard({ project, onEditProject }) {
                         No preview
                     </div>
                 )}
+                
+                {/* Processing indicator overlay on image */}
+                {activeJob && (
+                    <div className="card-processing-overlay">
+                        <ProcessingIndicator job={activeJob} size="small" />
+                    </div>
+                )}
             </div>
             
             <div className="card-content">
@@ -44,6 +122,7 @@ export function HWCCard({ project, onEditProject }) {
                         projectName={project.name}
                         project={project}
                         onEdit={onEditProject}
+                        onDelete={onDeleteProject}
                         triggerButton={{
                             className: "card-menu-btn",
                             ariaLabel: "More options",
