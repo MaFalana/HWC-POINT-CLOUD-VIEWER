@@ -1,6 +1,6 @@
 import '../../../styles/map.css';
 import { FaPlus, FaMinus } from "react-icons/fa6";
-import { TbBorderCorners } from "react-icons/tb";
+import { MdCenterFocusStrong } from "react-icons/md";
 import React from 'react';
 
 export function LayerToggle({ baseLayer, setBaseLayer }) {
@@ -45,7 +45,7 @@ export function ZoomControls({ onZoomIn, onZoomOut, onZoomToAll }) {
         className="zoom-btn" 
         aria-label="Zoom to all markers"
       >
-        <TbBorderCorners />
+        <MdCenterFocusStrong />
       </button>
 
       <button 
