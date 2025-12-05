@@ -111,7 +111,6 @@ canvas {
   overflow: hidden;
   border: none;
   outline: none;
-  flex: 1;
 }
 
 
@@ -313,4 +312,90 @@ canvas {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/
+* Mobile Optimizations */
+@media (max-width: 768px) {
+  /* Ensure minimum font sizes for readability */
+  body {
+    font-size: 14px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Ensure buttons are touch-friendly */
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    -webkit-tap-highlight-color: rgba(238, 47, 39, 0.2);
+  }
+
+  /* Prevent text selection during touch interactions */
+  .viewer-container,
+  .potree-container {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  /* Allow text selection in inputs and text areas */
+  input,
+  textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  /* Improve scrolling on mobile */
+  .sidebar-content,
+  .scene-tree,
+  .measurement-list,
+  .annotation-list,
+  .bookmark-list {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Prevent zoom on input focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important; /* Prevents iOS zoom */
+  }
+
+  /* Optimize animations for mobile */
+  * {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+/* High DPI / Retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Ensure crisp rendering on high DPI screens */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .viewer-container {
+    height: calc(100vh - 48px); /* Smaller header in landscape */
+  }
+
+  .viewer-sidebar {
+    top: 48px;
+    height: calc(100vh - 48px);
+  }
+
+  .sidebar-overlay {
+    top: 48px;
+  }
 }

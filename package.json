@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "hwc-potree-viewer",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,15 +9,21 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.2",
-    "@types/react": "^19.2.6",
-    "@types/react-dom": "^19.2.3",
+    "@astrojs/node": "^9.5.1",
     "astro": "^5.16.0",
+    "cesium": "^1.136.0",
+    "georaster": "^1.6.0",
+    "georaster-layer-for-leaflet": "^4.1.2",
     "leaflet": "^1.9.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
     "react-leaflet": "^5.0.0",
     "react-leaflet-cluster": "^4.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/react": "^4.4.2",
+    "@types/react": "^19.2.6",
+    "@types/react-dom": "^19.2.3"
   }
 }

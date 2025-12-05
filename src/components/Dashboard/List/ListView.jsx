@@ -1,4 +1,5 @@
 import { FaEllipsis } from "react-icons/fa6";
+import { GoArrowUpRight } from 'react-icons/go';
 import { useState, useEffect } from "react";
 import { CgSpinner } from "react-icons/cg";
 import { IoAlertCircle } from "react-icons/io5";
@@ -96,18 +97,27 @@ function TableRow({ project, isSelected, onSelect, onEditProject, onDeleteProjec
         )}
       </td>
       <td className="table-cell-actions">
-        <ProjectMenu
-          projectId={project._id}
-          projectName={project.name}
-          project={project}
-          onEdit={onEditProject}
-          onDelete={onDeleteProject}
-          triggerButton={{
-            className: "table-menu-btn",
-            ariaLabel: "More options",
-            icon: <FaEllipsis />
-          }}
-        />
+        <div className="table-actions-group">
+          <a 
+            href={`/view/${project._id}`}
+            className="table-view-btn"
+            aria-label="Open viewer"
+          >
+            <GoArrowUpRight />
+          </a>
+          <ProjectMenu
+            projectId={project._id}
+            projectName={project.name}
+            project={project}
+            onEdit={onEditProject}
+            onDelete={onDeleteProject}
+            triggerButton={{
+              className: "table-menu-btn",
+              ariaLabel: "More options",
+              icon: <FaEllipsis />
+            }}
+          />
+        </div>
       </td>
     </tr>
   );

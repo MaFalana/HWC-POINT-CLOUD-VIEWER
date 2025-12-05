@@ -236,9 +236,38 @@
 
 /* Actions Column */
 .table-cell-actions {
-  width: 60px;
+  width: 80px;
   text-align: center;
   padding: 0.5rem !important;
+}
+
+.table-actions-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.table-view-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  min-height: 32px;
+  text-decoration: none;
+  font-size: 1.125rem;
+}
+
+.table-view-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--hwc-red);
 }
 
 .table-menu-btn {

@@ -87,13 +87,13 @@ function MapListItem({ project, isSelected, isHighlighted, onSelect, onNavigate,
         <div className="map-list-date">{formattedDate}</div>
       </div>
       
-      <button 
+      <a 
+        href={`/view/${project._id}`}
         className="map-list-nav-btn" 
-        onClick={() => onNavigate(project)}
-        aria-label="Navigate to project"
+        aria-label="Open viewer"
       >
         <GoArrowUpRight />
-      </button>
+      </a>
       
       <ProjectMenu
         projectId={project._id}

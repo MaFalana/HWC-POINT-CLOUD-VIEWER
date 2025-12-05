@@ -107,6 +107,32 @@
   flex: 1;
 }
 
+.card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.card-view-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  font-size: 1.125rem;
+}
+
+.card-view-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--hwc-red);
+}
+
 .card-menu-btn {
   background: transparent;
   border: none;

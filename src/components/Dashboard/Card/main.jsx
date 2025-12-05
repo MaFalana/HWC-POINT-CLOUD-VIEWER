@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import '../../../styles/card.css';
 import '../../../styles/project-menu.css';
 import { FaEllipsisVertical } from "react-icons/fa6";
+import { GoArrowUpRight } from 'react-icons/go';
 import { ProjectMenu } from '../ProjectMenu';
 import { ProcessingIndicator } from '../ProcessingIndicator';
 import { jobAPI } from '../../../api/index.js';
@@ -117,18 +118,28 @@ export function HWCCard({ project, isSelected, onSelect, onEditProject, onDelete
             <div className="card-content">
                 <div className="card-header">
                     <h3 className="card-title">{project.name}</h3>
-                    <ProjectMenu
-                        projectId={project._id}
-                        projectName={project.name}
-                        project={project}
-                        onEdit={onEditProject}
-                        onDelete={onDeleteProject}
-                        triggerButton={{
-                            className: "card-menu-btn",
-                            ariaLabel: "More options",
-                            icon: <FaEllipsisVertical />
-                        }}
-                    />
+                    <div className="card-header-actions">
+                        <a 
+                            href={`/view/${project._id}`}
+                            className="card-view-btn"
+                            aria-label="Open viewer"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <GoArrowUpRight />
+                        </a>
+                        <ProjectMenu
+                            projectId={project._id}
+                            projectName={project.name}
+                            project={project}
+                            onEdit={onEditProject}
+                            onDelete={onDeleteProject}
+                            triggerButton={{
+                                className: "card-menu-btn",
+                                ariaLabel: "More options",
+                                icon: <FaEllipsisVertical />
+                            }}
+                        />
+                    </div>
                 </div>
                 
                 <p className="card-id">{project._id}</p>
