@@ -3,7 +3,10 @@ import Layout from '../../layouts/Layout.astro';
 import { PotreeViewer } from '../../components/Viewer/main';
 
 export function getStaticPaths() {
-  return [];
+  // Generate a catch-all page that will handle all /view/* routes
+  return [
+    { params: { id: undefined } }
+  ];
 }
 ---
 
