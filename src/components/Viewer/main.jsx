@@ -7,7 +7,7 @@ import { ViewerHeader } from './ViewerHeader';
 import { projectAPI } from '../../api/index.js';
 import '../../styles/global.css';
 
-export function PotreeViewer({ project: projectProp, projectId, initialMode = '3d', onStateChange = null }) {
+export function PotreeViewer({ project: projectProp, projectId: projectIdProp, initialMode = '3d', onStateChange = null }) {
   const [project, setProject] = useState(projectProp || null);
   const [loading, setLoading] = useState(!projectProp);
   const [error, setError] = useState(null);
@@ -18,7 +18,17 @@ export function PotreeViewer({ project: projectProp, projectId, initialMode = '3
   const viewersRef = useRef({ cesiumViewer: null, potreeViewer: null });
   const mapRef = useRef(null);
 
-  // Fetch project data if projectId is provided but project is not
+  // Extract project ID from URL if not provided as prop
+  const getProjectIdFromUrl = () => {
+    if (typeof window === 'undefined') return null;
+    const pathParts = window.location.pathname.split('/');
+    const viewIndex = pathParts.indexOf('view');
+    return viewIndex !== -1 && pathParts[viewIndex + 1] ? pathParts[viewIndex + 1] : null;
+  };
+
+  const projectId = projectIdProp || getProjectIdFromUrl();
+
+  // Fetch project data if projectId is available but project is not
   useEffect(() => {
     if (!project && projectId) {
       const fetchProject = async () => {

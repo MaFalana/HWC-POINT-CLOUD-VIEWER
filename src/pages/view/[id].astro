@@ -2,13 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import { PotreeViewer } from '../../components/Viewer/main';
 
-// Disable prerendering for dynamic routes
-export const prerender = false;
-
-// Get project ID from URL params
-const { id } = Astro.params;
+// For static builds, we can't pre-generate all project pages
+// The React component will extract the ID from the URL client-side
+export function getStaticPaths() {
+  return [];
+}
 ---
 
 <Layout title="Cloud Viewer">
-  <PotreeViewer project={null} projectId={id} client:only="react" />
+  <PotreeViewer project={null} projectId={null} client:only="react" />
 </Layout>
