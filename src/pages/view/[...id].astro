@@ -2,8 +2,6 @@
 import Layout from '../../layouts/Layout.astro';
 import { PotreeViewer } from '../../components/Viewer/main';
 
-// For static builds, we can't pre-generate all project pages
-// The React component will extract the ID from the URL client-side
 export function getStaticPaths() {
   return [];
 }
