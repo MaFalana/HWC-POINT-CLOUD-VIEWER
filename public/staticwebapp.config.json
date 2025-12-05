@@ -1,14 +1,14 @@
 {
+  "navigationFallback": {
+    "rewrite": "/view/index.html",
+    "exclude": ["/_astro/*", "/assets/*", "/potree/*", "*.{css,js,jpg,png,gif,ico,svg,woff,woff2,ttf,eot,json,wasm}"]
+  },
   "routes": [
     {
       "route": "/view/*",
-      "serve": "/view/index.html"
+      "rewrite": "/view/index.html"
     }
   ],
-  "navigationFallback": {
-    "rewrite": "/404.html",
-    "exclude": ["/_astro/*", "/assets/*", "/potree/*"]
-  },
   "mimeTypes": {
     ".json": "application/json",
     ".wasm": "application/wasm"
