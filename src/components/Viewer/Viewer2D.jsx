@@ -72,7 +72,7 @@ export function Viewer2D({ project, baseLayer, onMapReady }) {
       
       try {
         // Fetch the COG file
-        const response = await fetch(project.ortho);
+        const response = await fetch(project.ortho.file);
         
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
